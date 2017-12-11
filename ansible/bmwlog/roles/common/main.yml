@@ -1,0 +1,9 @@
+---
+
+- name: install packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - git
+    - nginx

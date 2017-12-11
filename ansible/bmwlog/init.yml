@@ -6,10 +6,7 @@
   tasks:
     - include_vars: "vars/common.yml"
 
-    - name: install packages
-      yum:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - git
-        - nginx
+
+  roles:
+    - common
+    - mongodb
