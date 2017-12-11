@@ -3,20 +3,23 @@
 - name: add 10gen repo file
   template:
     src: repo.j2
-    dest: /etc/yum.repos.d/10gen.repo
+    dest: /etc/yum.repos.d/mongodb-org-3.6.repo
   tags: mongodb
+  become: true
 
 - name: install mongodb
   yum:
-    name: mongo-10gen-server
+    name: mongodb-org
     state: present
   tags: mongodb
+  become: true
 
 - name: configure mongodb
   template:
     src: mongod.conf.j2
     dest: /etc/mongod.conf
   tags: mongodb
+  become: true
 
 - name: run mongodb
   service:
@@ -24,3 +27,4 @@
     state: started
     enabled: yes
   tags: mongodb
+  become: true
