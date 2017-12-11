@@ -9,4 +9,33 @@
     - lsof
     - vim
     - nginx
+    - python-pip
+    - mariadb-server  # it's mysql for centos
+    - mariadb-devel
+  become: true
+
+- name: install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
+  become: true
+
+- name: upgrade pip
+  shell: "pip install --upgrade pip"
+  become: true
+
+- name: install pip packages
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - supervisor
+    - virtualenv
+  become: true
+
+- name: make sure mariadb is enabled and started
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
   become: true
