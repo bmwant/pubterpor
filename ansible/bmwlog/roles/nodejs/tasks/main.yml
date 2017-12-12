@@ -1,0 +1,25 @@
+---
+
+- name: install Extra Packages for Enterprise Linux
+  yum:
+    name: epel-release
+    state: latest
+  become: true
+
+- name: install nodejs
+  yum:
+    name: nodejs
+    state: latest
+  become: true
+
+- name: install npm
+  yum:
+    name: npm
+    state: latest
+  become: true
+
+- name: install forever
+  npm:
+    name: forever
+    global: yes
+  become: true
