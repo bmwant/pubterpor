@@ -5,9 +5,9 @@ upstream {{ app_alias }} {
 
 
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    server_name bmwlog.pp.ua;
+    listen {{ exposed_port }} default_server;
+    listen [::]:{{ exposed_port }} default_server;
+    server_name _;
     charset utf-8;
 
     root {{ project_root }};
