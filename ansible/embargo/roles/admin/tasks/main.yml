@@ -25,3 +25,29 @@
   shell: "pipenv install"
   args:
     chdir: "{{ project_root }}"
+
+- name: render supervisor config
+  template:
+    src: templates/supervisor_app.conf.j2
+    dest: "{{ project_root }}/supervisor_{{ app_alias }}.conf"
+  notify: supervisor reload
+
+- name: render nginx config
+  template:
+    src: templates/nginx_app.conf.j2
+    dest: "{{ project_root }}/prod/nginx_{{ app_alias }}.conf"
+  notify: nginx reload
+
+- name: ensure supervisor config linked
+  file:
+    src: "{{ project_root }}/supervisor_{{ app_alias }}.conf"
+    dest: /etc/supervisor/conf.d/{{ app_alias }}.conf
+    state: link
+  become: true
+
+- name: ensure nginx config linked
+  file:
+    src: "{{ project_root }}/nginx_{{ app_alias }}.conf"
+    dest: /etc/nginx/conf.d/{{ app_alias }}.conf
+    state: link
+  become: true

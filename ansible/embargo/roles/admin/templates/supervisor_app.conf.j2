@@ -1,0 +1,9 @@
+[program:{{ app_alias }}]
+command=pipenv run python run.py {{ path_to_database }}
+directory={{ project_root }}
+user={{ ansible_ssh_user }}
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/var/log/{{ app_alias }}.supervisor.stdout
+stopsignal=QUIT
