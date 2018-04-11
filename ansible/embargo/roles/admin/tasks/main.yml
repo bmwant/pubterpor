@@ -35,7 +35,7 @@
 - name: render nginx config
   template:
     src: templates/nginx_app.conf.j2
-    dest: "{{ project_root }}/prod/nginx_{{ app_alias }}.conf"
+    dest: "{{ project_root }}/nginx_{{ app_alias }}.conf"
   notify: nginx reload
 
 - name: ensure supervisor config linked
