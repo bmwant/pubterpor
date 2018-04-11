@@ -1,41 +1,27 @@
 ---
 
-- name: install packages
-  yum:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - git
-    - lsof
-    - vim
-    - nginx
-    - python-pip
-    - mariadb-server  # it's mysql for centos
-    - mariadb-devel
+- name: clone project repository
+  git:
+    repo: "https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ repository_partial_url }}"
+    dest: "{{ project_root }}"
+    version: "{{ repository_branch }}"
   become: true
 
-- name: install the 'Development tools' package group
-  yum:
-    name: "@Development tools"
-    state: present
+- name: set correct permissions on a project
+  file:
+    path: "{{ project_root }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    recurse: yes
   become: true
 
-- name: upgrade pip
-  shell: "pip install --upgrade pip"
+- name: install pipenv
+  # assumptions
+  shell: "/usr/local/bin/pip3.6 install pipenv"
   become: true
 
-- name: install pip packages
-  pip:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - supervisor
-    - virtualenv
-  become: true
-
-- name: make sure mariadb is enabled and started
-  systemd:
-    name: mariadb
-    state: started
-    enabled: yes
-  become: true
+- name: install requirements with pipenv
+  shell: "pipenv install"
+  args:
+    chdir: "{{ project_root }}"
