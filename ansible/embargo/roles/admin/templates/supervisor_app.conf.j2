@@ -1,4 +1,7 @@
 [program:{{ app_alias }}]
+environment=
+  HOME="/home/{{ ansible_ssh_user }}",
+  USER="{{ ansible_ssh_user }}"
 command=pipenv run python run.py {{ path_to_database }}
 directory={{ project_root }}
 user={{ ansible_ssh_user }}
