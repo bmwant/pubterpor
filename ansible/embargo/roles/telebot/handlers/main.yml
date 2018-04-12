@@ -1,0 +1,5 @@
+---
+
+- name: supervisor reload
+  shell: "supervisorctl reread && supervisorctl update"
+  become: true
