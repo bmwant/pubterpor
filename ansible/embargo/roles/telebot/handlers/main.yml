@@ -3,3 +3,8 @@
 - name: supervisor reload
   shell: "supervisorctl reread && supervisorctl update"
   become: true
+
+
+- name: restart app
+  shell: "supervisorctl restart {{ app_alias }}"
+  become: true

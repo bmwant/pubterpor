@@ -42,4 +42,6 @@
     src: "{{ project_root }}/supervisor_{{ app_alias }}.conf"
     dest: /etc/supervisor/conf.d/{{ app_alias }}.conf
     state: link
+  notify: restart app
   become: true
+
