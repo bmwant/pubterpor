@@ -7,5 +7,5 @@
     - include_vars: "vars/common.yml"
 
   roles:
-#    - admin
-    - telebot
+    - admin
+#    - telebot
